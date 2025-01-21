@@ -133,27 +133,36 @@ and the hardware?
 
 \bo{Do We Always Need an Operating System?}
 
-In a Single fixed application there may be no need for complex task scheduling or user management.
+For a Single fixed application there may be no need for complex task scheduling or user management.
 A single program can run just on the hardware without an operating system.
-Arduino is an Example of a single fixed application program that runs without a traditional OS
-Instead, developers write code, which compiles into firmware and is put directly on the hardware.
+
+\bo{Arduino} is an Example of a single fixed application program that runs without a traditional OS
+Instead, developers write code, compile it, and upload the firmware directly to the microcontroller.
+The hardware runs the single application, handling 
+iput/output pins and other resources without any OS layer.
 
 \bo{Is an OS Neccesary in this Case?}
 
-Not necessarily, A single task can be implemented without an OS.
+Not necessarily. When only one application runs you might not need.
 \begin{itemize}
-  \item no need for multitasking if only one application runs
-  \item no user accounts or complex memory management is required
-  \item The application can directly interact with the hardware registers.
+  \item multitasking or task scheduling.
+  \item User accounts or complex memory management.
+  \item drivers or abstractions.
 \end{itemize}
+The application can directly access hardware registers and peripherals.
+
 
 \bo{Why is it Reasonable to Have an OS?}
-Even if it is possible to run an application directly on hardware, an OS can provide benefits:
+
+Even though running code without an OS is possible, there are benefits to using one:
 
 \begin{enumerate}
-  \item \bo{Hardware Abstraction:}The OS provides libraries and drivers so you don’t have to program hardware registers and low-level details directly.
-  \item \bo{Resource Management:} If you have multiple concurrent tasks or real-time constraints, an OS can handle CPU scheduling, memory allocation, and interrupts in a structured way.
-  \item \bo{Portability and Reusability:} An OS offers standard APIs for example POSIX.
+  \item \bo{Hardware Abstraction:} An OS provides libraries and drivers, 
+        reducing the need to maage low level hardware directly.
+  \item \bo{Resource Management:} For multiple tasks 
+        the OS handles CPU scheduling, memory allocation, and interrupt processing.
+  \item \bo{Portability and Reusability:} Using an OS with standard APIs for example \bo{POSIX}
+        makes it easier to port code between different platforms and maintain projects long-term.
 \end{enumerate}
 
 
