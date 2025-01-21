@@ -1,0 +1,161 @@
+\documentclass{article}
+
+% Encodings, page setup, paragraph formatting, font
+\usepackage[top=0.9in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage[icelandic]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\usepackage[parfill]{parskip}
+\usepackage{cancel}
+\usepackage{comment}
+% Tables and lists
+\usepackage{booktabs,tabularx}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+% Math
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{gensymb}
+% Graphics
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta}
+% Code environment
+\usepackage{listingsutf8}
+\definecolor{commentcolor}{RGB}{0, 128, 0} % Grænn
+\definecolor{keywordcolor}{RGB}{0, 0, 255}   % Blár
+\definecolor{stringcolor}{RGB}{163, 21, 21}      % Dökkrauður
+\definecolor{numbercolor}{RGB}{128, 0, 128}      % Fjólublár
+\definecolor{identifiercolor}{RGB}{0, 0, 0}      % Svartur
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor},
+    identifierstyle=\color{identifiercolor},
+    stringstyle=\color{stringcolor},   
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=2,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    inputencoding=utf8, 
+    extendedchars=true,  
+    literate=
+        {á}{{\'a}}1
+        {ð}{{\dh}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {ý}{{\'y}}1
+        {þ}{{\th}}1
+        {æ}{{\ae}}1
+        {ö}{{\"o}}1
+        {Á}{{\'A}}1
+        {Ð}{{\DH}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ú}{{\'U}}1
+        {Ý}{{\'Y}}1
+        {Þ}{{\TH}}1
+        {Æ}{{\AE}}1
+        {Ö}{{\"O}}1,
+}
+
+% Restin af forskriftinni
+\usepackage[pdftex,bookmarks=true,colorlinks=true,pdfauthor={Hafsteinn Einarsson},linkcolor=blue,urlcolor=blue]{hyperref}
+
+%Custom Commands til að auðvelda mér lífið
+\newcommand{\sv}{\textbf{Svar:}}
+\newcommand{\bo}[1]{\textbf{#1}}
+\newcommand{\enum}{\begin{enumerate}[label = \alph*.]}
+
+% Hyphenation
+\hyphenpenalty=5000
+% Page and section numbering
+\setcounter{secnumdepth}{-1} 
+\pagenumbering{gobble}
+
+\title{Verkefni 1}
+\author{brj46 }
+\date{vor 2025}
+
+\begin{document}
+
+\maketitle
+
+
+
+\vspace{5em}
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{Operating-system.png}
+\end{center}
+
+\vspace{3em}
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{arduino.png}
+\end{center}
+
+\newpage
+
+\section{Verkefni 1}
+
+Discuss whether operating systems are needed at all!1 Consider for example the situation
+where only one single fixed application program is executed on a hardware with no user
+interface (like E.g. use Arduino as an example in an embedded system such as the software
+running on the electronic control unit hardware, e.g. for motor control of a vehicle). Does
+Arduino have an OS? What does a developer have to provide to run code? Is an OS needed
+in this case or could the single fixed application program run on the hardware without an
+operating systems?
+In case you come to the conclusion that operating systems are not necessarily needed: why
+is it nevertheless reasonable to have an operating system in-between an application program
+and the hardware?
+
+\sv
+
+\bo{Do We Always Need an Operating System?}
+
+In a Single fixed application there may be no need for complex task scheduling or user management.
+A single program can run just on the hardware without an operating system.
+Arduino is an Example of a single fixed application program that runs without a traditional OS
+Instead, developers write code, which compiles into firmware and is put directly on the hardware.
+
+\bo{Is an OS Neccesary in this Case?}
+
+Not necessarily, A single task can be implemented without an OS.
+\begin{itemize}
+  \item no need for multitasking if only one application runs
+  \item no user accounts or complex memory management is required
+  \item The application can directly interact with the hardware registers.
+\end{itemize}
+
+\bo{Why is it Reasonable to Have an OS?}
+Even if it is possible to run an application directly on hardware, an OS can provide benefits:
+
+\begin{enumerate}
+  \item \bo{Hardware Abstraction:}The OS provides libraries and drivers so you don’t have to program hardware registers and low-level details directly.
+  \item \bo{Resource Management:} If you have multiple concurrent tasks or real-time constraints, an OS can handle CPU scheduling, memory allocation, and interrupts in a structured way.
+  \item \bo{Portability and Reusability:} An OS offers standard APIs for example POSIX.
+\end{enumerate}
+
+
+
+\end{document}
