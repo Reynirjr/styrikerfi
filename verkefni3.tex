@@ -1,0 +1,231 @@
+\documentclass{article}
+
+% Encodings, page setup, paragraph formatting, font
+\usepackage[top=0.9in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage[icelandic]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\usepackage[parfill]{parskip}
+\usepackage{cancel}
+\usepackage{comment}
+% Tables and lists
+\usepackage{booktabs,tabularx}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+% Math
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{gensymb}
+% Graphics
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta}
+% Code environment
+\usepackage{listingsutf8}
+\definecolor{commentcolor}{RGB}{0, 128, 0} % Grænn
+\definecolor{keywordcolor}{RGB}{0, 0, 255}   % Blár
+\definecolor{stringcolor}{RGB}{163, 21, 21}      % Dökkrauður
+\definecolor{numbercolor}{RGB}{128, 0, 128}      % Fjólublár
+\definecolor{identifiercolor}{RGB}{0, 0, 0}      % Svartur
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor},
+    identifierstyle=\color{identifiercolor},
+    stringstyle=\color{stringcolor},   
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=2,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    inputencoding=utf8, 
+    extendedchars=true,  
+    literate=
+        {á}{{\'a}}1
+        {ð}{{\dh}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {ý}{{\'y}}1
+        {þ}{{\th}}1
+        {æ}{{\ae}}1
+        {ö}{{\"o}}1
+        {Á}{{\'A}}1
+        {Ð}{{\DH}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ú}{{\'U}}1
+        {Ý}{{\'Y}}1
+        {Þ}{{\TH}}1
+        {Æ}{{\AE}}1
+        {Ö}{{\"O}}1,
+}
+
+% Restin af forskriftinni
+\usepackage[pdftex,bookmarks=true,colorlinks=true,pdfauthor={Hafsteinn Einarsson},linkcolor=blue,urlcolor=blue]{hyperref}
+
+%Custom Commands til að auðvelda mér lífið
+\newcommand{\sv}{\textbf{Svar:}}
+\newcommand{\bo}[1]{\textbf{#1}}
+\newcommand{\enum}{\begin{enumerate}[label = \alph*.]}
+
+% Hyphenation
+\hyphenpenalty=5000
+% Page and section numbering
+\setcounter{secnumdepth}{-1} 
+\pagenumbering{gobble}
+
+\title{Verkefni 2}
+\author{brj46 }
+\date{vor 2025}
+
+\begin{document}
+
+\maketitle
+
+\vspace{5em}
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{vm.png}
+\end{center}
+
+\newpage
+
+\section{Verkefni 3a}
+\subsection{Spurning 1}
+\bo{The scheduler of the VM hypervisor has just granted $\text{OS}_1$ CPU time for 20ms. While $\text{OS}_1$
+is running in the granted time slot, the timer of $\text{OS}_2$ for triggering the CPU scheduler of
+$\text{OS}_2$ expires. Describe two different options of how the VM hypervisor could deal with
+this!}
+
+\sv
+
+
+The VM hypervisor could either: 
+
+\begin{enumerate}
+    \item Delay the handling of the interrupt from $\text{OS}_2$ until $\text{OS}_1$ has finished its time slot.
+    once $\text{OS}_1$ has finished its time slot, the hypervisor can handle the interrupt from $\text{OS}_2$ and grant it CPU time.
+
+    This option ensures that $\text{OS}_1$ gets its full time slot but $\text{OS}_2$ will experience a delay.
+
+    \item Pause $\text{OS}_1$ and immediately switch to $\text{OS}_2$ to handle the interrupt. After $\text{OS}_2$ has finished its interrupt, the hypervisor can resume $\text{OS}_1$ 
+    or continue with $\text{OS}_2$ depending on the scheduling policy.
+
+    This option ensures that $\text{OS}_2$ gets its interrupt handled in a timely manner but $\text{OS}_1$ will experience an interruption.
+\end{enumerate}
+
+
+\subsection{Spurning 2}
+\bo{In a virtual machine scenario, the different virtual machines are really completely separated
+from each other: $\text{OS}_1$ running on $\text{VM}_1$ can neither access the main memory nor
+the files1 of $\text{OS}_2$ running on $\text{VM}_2$. – Describe one possible solution that allows you
+nevertheless to exchange data between different virtual machines}
+
+\sv
+
+
+
+A possible solution to exchange data between different virtual machines is to use a shared file system.
+
+The hypervisor could provide a shared virtual disk or file system that both 
+virtual machines can access. This shared storage would act as a medium 
+for data exchange between the virtual machines.
+
+
+\section{Verkefni 3b}
+\subsection{Spurning 1}
+\bo{While you should not download and run unknown software, in particular not OSes,
+from untrusted sources, why is it not a problem to download and run the VM image for
+solving this assignment?}
+
+\sv
+
+
+Well this software is provided by the university and is part of the course material. 
+The main concern with running unknown software is the risk of malicious code, 
+such as viruses or ransomware, which could harm your host system. 
+However, since the VM image is provided by a trusted source, the risk is minimal.
+
+
+\subsection{Spurning 2}
+\bo{Create CPU load inside the guest OS, e.g. by opening a command line shell and running
+on the command line: yes >/dev/null (stop later using Ctrl-C): describe briefly how
+this CPU load affects your host system in terms of change of the CPU load as displayed
+by some system monitor running on the host system (e.g. top on Linux or Mac OS
+command line or the MS Windows task manager)?}
+
+
+\sv
+
+
+When running the command \texttt{yes >/dev/null} in the guest OS, the CPU load on the host system increased as I saw in my task manager.
+but only from around $30\%$ to around $41\%$.
+
+
+\subsection{Spurning 3}
+\bo{Now, do the opposite by creating load on your host system: e.g., using yes >/dev/null
+on Linux or Mac OS command line – for MS Windows, you can create a file that
+contains the following lines, save it into, e.g., your home directory in a file of type .BAT,
+and execute that file:
+}
+\begin{verbatim}
+    @echo off
+    :loop
+    goto loop 
+\end{verbatim}
+\bo{
+Describe briefly how this CPU load affects your guest system in terms of change of the
+CPU load as displayed by, e.g., the command line system monitor top on the guest
+system.}
+
+\sv
+
+
+The CPU usage in the guest OS increased because the host system was consuming CPU resources, leaving fewer resources available for the VM. 
+When I created CPU load on the host system using the .Bat file, the host system's CPU usage increased significantly. 
+As a result, the guest OS had less access to the CPU resources, causing its CPU usage to increase as well.
+
+
+\subsection{Spurning 4}
+\bo{Are the effects reported by the system monitors the same in the two above cases? If not, 
+how can the different monitoring results be explained}
+
+\sv
+
+
+The effects are similar but not the same.
+\begin{enumerate}
+    \item When you create CPU load in the guest OS the host system's CPU usage 
+    increases because the VM is consuming CPU resources allocated to it by the host.
+
+    \item When you create CPU load on the host system the guest OS's CPU usage 
+    increases because the host system is consuming CPU resources, 
+    leaving fewer resources available for the VM.
+\end{enumerate}
+
+The differences in the monitoring results can be explained by how 
+VirtualBox allocates CPU resources between the host and guest systems. 
+The host system has direct control over the physical CPU and dynamically 
+allocates resources to the VM. When the host system is under heavy load, 
+it prioritizes its own processes, reducing the resources available to the VM.
+
+
+\end{document}
