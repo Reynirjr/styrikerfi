@@ -103,10 +103,34 @@
 \vspace{5em}
 
 \begin{center}
-    \includegraphics[width=0.6\textwidth]{vm.png}
+    \includegraphics[width=0.6\textwidth]{imgs/IPC.jpeg}
 \end{center}
 
 \newpage
+
+\section{1. Introduction to IPC} 
+\bo{define interprocess communication and explain why it is essential in operationg systems for enabling processes to work together.}
+
+\sv
+interprocess Communication refers to the mechanisms an operating system provides to allow 
+processes to share data and coordinate their activities.
+Since Processes generally run in seperate adress spaces, interprocess Communication enables
+them to cooperate on tasks.
+without IPC, processes would be isolated and unable to access shared data or coordinate their activities.
+
+
+\section{2. Shared Memory}
+\bo{ Describe shared memory as a method of IPC where multiple processes can access
+the same memory space provided by the operating system.}
+
+\sv
+ 
+Shared memory is an IPC method where the operating system sets aside a region of memory
+that multiple processes can access concurrently. Each process that attaches to the shared
+memory region can read from and write to this space as if it were a part of its own address space.
+
+
+\section{3. Message Passing}
 
 
 
