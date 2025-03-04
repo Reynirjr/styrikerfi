@@ -1,3 +1,4 @@
+package Assignment11;
 // You are free to modify this class, e.g. add fields, methods,
 // constructors, extend from class Thread etc. with the two exceptions:
 // 1. Do not change the name of this class nor put it into another package
