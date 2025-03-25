@@ -1,0 +1,135 @@
+\documentclass{article}
+
+% Encodings, page setup, paragraph formatting, font
+\usepackage[top=0.9in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage[icelandic]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\usepackage[parfill]{parskip}
+\usepackage{cancel}
+\usepackage{comment}
+% Tables and lists
+\usepackage{booktabs,tabularx}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+% Math
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{gensymb}
+% Graphics
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta}
+% Code environment
+\usepackage{listingsutf8}
+\definecolor{commentcolor}{RGB}{0, 128, 0} % Grænn
+\definecolor{keywordcolor}{RGB}{0, 0, 255}   % Blár
+\definecolor{stringcolor}{RGB}{163, 21, 21}  % Dökkrauður
+\definecolor{numbercolor}{RGB}{128, 0, 128}  % Fjólublár
+\definecolor{identifiercolor}{RGB}{0, 0, 0}  % Svartur
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor},
+    identifierstyle=\color{identifiercolor},
+    stringstyle=\color{stringcolor},
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    tabsize=2,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    inputencoding=utf8, 
+    extendedchars=true,
+    literate=
+        {á}{{\'a}}1
+        {ð}{{\dh}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {ý}{{\'y}}1
+        {þ}{{\th}}1
+        {æ}{{\ae}}1
+        {ö}{{\"o}}1
+        {Á}{{\'A}}1
+        {Ð}{{\DH}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ú}{{\'U}}1
+        {Ý}{{\'Y}}1
+        {Þ}{{\TH}}1
+        {Æ}{{\AE}}1
+        {Ö}{{\"O}}1,
+}
+
+% Restin af forskriftinni
+\usepackage[pdftex,bookmarks=true,colorlinks=true,pdfauthor={Hafsteinn Einarsson},
+            linkcolor=blue,urlcolor=blue]{hyperref}
+
+%Custom Commands til að auðvelda mér lífið
+\newcommand{\sv}{\textbf{Svar: }}
+\newcommand{\bo}[1]{\textbf{#1}}
+\newcommand{\enum}{\begin{enumerate}[label = \alph*.]}
+
+% Hyphenation
+\hyphenpenalty=5000
+% Page and section numbering
+\setcounter{secnumdepth}{-1} 
+\pagenumbering{gobble}
+
+\title{Verkefni 20}
+\author{brj46 }
+\date{vor 2025}
+
+\begin{document}
+
+\maketitle
+
+\bo{Consider a system with a Paged Memory Management Unit (PMMU) that supports 12 bit
+physical addresses, however a process is only able to use 10 bit logical addresses. The page
+size is 64 byte, the word size is 1 byte.}
+
+\begin{enumerate}
+    \item Into how many pages is the logical address space divided?\\
+    \sv{$2^{10} \div 2^6 = 2^4 = 16$ pages}
+
+    \item Into how many frames is the physical address space divided?\\
+    \sv{$2^{12} \div 2^6 = 2^6 = 64$ frames}
+
+    \item What is the maximum degree of multiprogramming (how many programs can be loaded) if no swapping/demand paging is used?\\
+    \sv{Each process could use all 16 of its pages. There are 64 frames, so 4 processes could be loaded at once.}
+
+    \item Is it possible to state how many processes can be in the system simultaneously if swapping/demand paging is used? Explain.\\
+    \sv{No. With swapping/demand paging, not all pages need to reside in physical memory at once, so more than 4 processes can be loaded.}
+
+    \item How many entries does a page table have in this system?\\
+    \sv{Each page table has 16 entries (one per page).}
+
+    \item How many bits are needed for each page table entry (assuming only the minimal number for the frame number plus valid bit)?\\
+    \sv{We need 6 bits for the frame number (since there are 64 frames) and 1 bit for the valid bit, so 7 bits in total.}
+
+    \item Given the first four frame numbers in the page table are 7, 1, 10, 12 (the first entry = page 0, second entry = page 1, etc.), what is the physical address for logical address 42?\\
+    \sv{The page number is 0 (since 42 < 64), and offset is 42. Page 0 maps to frame 7, so the physical address is $7 \times 64 + 42 = 490$.}
+
+    \item What logical address maps to physical address 681?\\
+    \sv{$681 \div 64 = 10$ (integer division), remainder $41$, so the frame is 10, the offset is 41. 
+    From the table, frame 10 corresponds to page 2. Hence the logical address is $2 \times 64 + 41 = 169$.}
+
+\end{enumerate}
+
+\end{document}
